@@ -1,12 +1,12 @@
-FROM python:3.13-slim
+FROM python:3.9
 
 WORKDIR /app
-COPY . /app
+COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Replace this line if you had:
-# ENTRYPOINT ["./entrypoint.sh"]
+# If using entrypoint.sh, do:
+# ENTRYPOINT ["bash", "entrypoint.sh"]
 
-# With this (forces execution via bash):
-ENTRYPOINT ["bash", "entrypoint.sh"]
+# Otherwise, if running directly with gunicorn:
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
